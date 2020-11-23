@@ -3,17 +3,19 @@ from tasks import fib_generator
 
 
 task_list = [
-        easy, 
-        medium,
-        hard
+        ("easy",easy), 
+        ("medium",medium), 
+        # ("hard",hard), 
         ]
 
 
 
-for task in task_list:
+for name,task in task_list:
+    print("task:", name, "started")
     task.delay()
 
 for i in range(10, 35):
+    print("example task initiated, COMPLEXITY:",i)
     fib_generator.delay(i)
 
 

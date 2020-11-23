@@ -7,10 +7,9 @@ First install celery:
 
 ## Explanation
 In this project there is a worker node(acting as consumer, tasks.py) and a task producer(producer.py). 
-Also this project uses rabbitmq as broker and redis as result backend
+Also this project uses redis as  a broker and a result backend
 Since this project is for demonstration just use docker images:   
 `$ docker run -d -p 6379:6379 redis`   
-`$ docker run -d -p 5672:5672 rabbitmq`   
 
 
 
@@ -26,3 +25,5 @@ In the celery console you can see that tasks distributed to different workers. T
 
 Even though this project works on a singular machine, once you create a rabbitmq and a redis service accesible from different machines, just update the urls for them and everything is same.
 
+## Note 
+I added yaml files for deployment to kubernetes however other way should still work. Will update after I test some details.
