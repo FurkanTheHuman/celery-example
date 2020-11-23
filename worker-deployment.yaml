@@ -18,4 +18,6 @@ spec:
       - name: worker
         image: demo/cworker:latest
         imagePullPolicy: Never
-        
+        env:
+          - name: REDIS_SERVICE_URL
+            value: "redis-service"
