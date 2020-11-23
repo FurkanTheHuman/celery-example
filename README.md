@@ -20,10 +20,10 @@ Notice that names are different. For more details on worker node creation see: h
 
 
 Now run the `producer.py` with `python3 producer.py`   
-In this file we send tasks that calculate fibonacci numbers recursively, which is a very slow way to calculate it.
-In the celery console you can see that tasks distributed to different workers. This distribution happens via rabbitmq.
+In this file we send tasks that calculates fibonacci numbers recursively, which is a very slow way to calculate it.
+In the celery console, you can see that tasks distributed to different workers. This distribution happens via rabbitmq.
 
 Even though this project works on a singular machine, once you create a rabbitmq and a redis service accesible from different machines, just update the urls for them and everything is same.
 
 ## Note 
-I added yaml files for deployment to kubernetes however other way should still work. Will update after I test some details.
+I added yaml files for deployment to kubernetes however other way should still work. Will update after I fix some details.
