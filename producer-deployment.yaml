@@ -2,10 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: producer-deployment
+  namespace: formica
   labels:
     app: producer
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: producer
@@ -16,6 +17,45 @@ spec:
     spec:
       containers:
       - name: producer
-        image: demo/celery:latest
-        imagePullPolicy: Never
+        image: furkanax/worker:latest
+        imagePullPolicy: Always
+        env:
+            - name: DEBUG
+              value: "true"
+            - name: RECOVERY_TAG
+              value: "_l_o_s_t_m_o_d_e_l_s_"
+            - name: REDIS_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_IP
+                  name: redis-config
+            - name: REDIS_PASS
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_PASS
+                  name: redis-config
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+            - name: ELASTICSEARCH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: ELASTICSEARCH_HOST
+                  name: elastic-config
+            - name: ELASTICSEARCH_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: ELASTICSEARCH_USER
+                  name: elastic-config
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: ELASTICSEARCH_PASSWORD
+                  name: elastic-config
+            - name: ELASTICSEARCH_CERTIFICATE_PATH
+              value: "/elastic-certificates/elasticsearch-es-http.default.es.local.cer"
+
+        command: ["python3"]
+        args: ["tprod.py"]
         

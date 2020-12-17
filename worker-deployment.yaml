@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: worker-deployment
+  namespace: formica
   labels:
     app: worker
 spec:
@@ -16,8 +17,34 @@ spec:
     spec:
       containers:
       - name: worker
-        image: demo/cworker:latest
-        imagePullPolicy: Never
+        image: furkanax/worker:latest
+        imagePullPolicy: Always
         env:
+          - name: C_FORCE_ROOT        
+            value: "true"
+          - name: RECOVERY_TAG
+            value: "_l_o_s_t_m_o_d_e_l_s_"
+          - name: DEBUG
+            value: "true"
           - name: REDIS_SERVICE_URL
-            value: "redis-service"
+            valueFrom:
+              configMapKeyRef:
+                key: REDIS_IP
+                name: redis-config
+          - name: REDIS_PASS
+            valueFrom:
+              configMapKeyRef:
+                key: REDIS_PASS
+                name: redis-config
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "0"
+          - name: ELASTIC_HOST
+            value: "elastic"
+          - name: ELASTIC_USER
+            value: "elastic"
+          - name: ELASTIC_PASSWORD
+            value: "password"
+          - name: ELASTIC_CERTIFICATE_PATH
+            value: "/elastic-certificates/"
